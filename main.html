@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: #111;
+      font-family: 'Roboto', sans-serif;
+      color: white;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Normal frame */
+    .frame {
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Typing effect scrolling right to left */
+    .typing-effect {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Moving animation */
+    .typing-effect span {
+      display: inline-block;
+      white-space: nowrap;
+      animation: scrollText 6s linear infinite;
+    }
+
+    @keyframes scrollText {
+      from { transform: translateX(100%); }
+      to { transform: translateX(-100%); }
+    }
+
+    /* 2x2 button grid */
+    .button-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    /* Normal button style */
+    .btn {
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      transition: 0.3s;
+    }
+
+    /* Particle Background */
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div id="particles-js"></div>
+
+  <!-- Normal frame -->
+  <div class="frame">
+    <!-- Scrolling Text -->
+    <div class="typing-effect">
+      <span>WELCOME TO THE CASEYRHODES-XMD BOT</span>
+    </div>
+
+    <!-- 2x2 Buttons Grid -->
+    <div class="button-container">
+      <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
+      <button onclick="window.open(`https://github.com/Rhodvick/RHODVICKEZ-MD`)" class="btn">GitHub</button>
+      <button onclick="window.open(`https://www.youtube.com/@Rhodvick`)" class="btn">YouTube</button>
+      <button onclick="window.open(`https://wa.me/+254115408870`)" class="btn">Contact</button>
+      <button onclick="window.open(`https://whatsapp.com/channel/0029VabySTR9Bb5upWFhMv1N`)" class="btn">Channel-1</button>
+      <button onclick="window.open(`https://whatsapp.com/channel/0029VasiOoR3bbUw5aV4qB31`)" class="btn">Channel-2</button>
+    </div>
+
+    <!-- Audio Player -->
+    <audio id="background-audio" loop>
+      <source src="https://files.catbox.moe/rswza4.mp3" type="audio/mp3">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+  <!-- ParticlesJS Script -->
+  <script>
+    particlesJS('particles-js', {
+      "particles": {
+        "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#FF4500" },
+        "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000" } },
+        "opacity": { "value": 0.4, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1 } },
+        "size": { "value": 5, "random": true, "anim": { "enable": true, "speed": 10, "size_min": 0.1 } },
+        "line_linked": { "enable": true, "distance": 120, "color": "#FF4500", "opacity": 0.3, "width": 1 },
+        "move": { "enable": true, "speed": 5, "random": true }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" } }
+      },
+      "retina_detect": true
+    });
+
+    // Function to change button colors randomly
+    function changeButtonColors() {
+      const colors = ["#ff4c4c", "#4caf50", "#1e90ff", "#ff9800", "#9c27b0", "#f44336", "#00bcd4", "#ffeb3b"];
+      document.querySelectorAll('.btn').forEach(button => {
+        button.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      });
+    }
+
+    // Change button colors every 2 seconds
+    setInterval(changeButtonColors, 2000);
+
+    // Audio play/pause on visibility change
+    const audio = document.getElementById('background-audio');
+
+    document.addEventListener("visibilitychange", function() {
+      if (document.hidden) {
+        audio.pause(); // Pause audio when user leaves the tab
+      } else {
+        audio.play().catch(error => console.log("Audio play failed:", error)); // Resume audio when user returns
+      }
+    });
+
+    // Auto-play audio when page loads
+    window.addEventListener("load", () => {
+      audio.play().catch(error => console.log("User interaction required for autoplay:", error));
+    });
+
+  </script>
+
+</body>
+</html>
