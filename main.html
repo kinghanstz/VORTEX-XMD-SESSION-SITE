@@ -46,7 +46,7 @@
       position: relative;
     }
 
-    /* Typing effect */
+    /* Typing effect with smooth right to left at 64fps */
     .typing-effect {
       font-size: 18px;
       font-weight: bold;
@@ -57,17 +57,13 @@
       width: 100%;
       position: relative;
       display: inline-block;
+      animation: typing 10s steps(50) infinite, randomColor 10s linear infinite;
     }
 
-    /* Slow motion typing */
-    .typing-effect span {
-      display: inline-block;
-      animation: scrollText 20s steps(50) infinite, randomColor 5s linear infinite;
-    }
-
-    @keyframes scrollText {
-      from { transform: translateX(100%); }
-      to { transform: translateX(-100%); }
+    /* Smooth typing animation */
+    @keyframes typing {
+      0% { width: 0%; }
+      100% { width: 100%; }
     }
 
     /* Random color effect */
@@ -79,6 +75,28 @@
       100% { color: #9c27b0; }
     }
 
+    /* 3D Button Styles */
+    .btn {
+      padding: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      background-color: #4caf50;
+      transition: background-color 3.6s ease, box-shadow 0.6s ease, transform 0.6s ease;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+      transform: perspective(500px) rotateX(0deg) rotateY(0deg);
+    }
+
+    /* Hover effect to make buttons look 3D */
+    .btn:hover {
+      transform: perspective(500px) rotateX(10deg) rotateY(10deg);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
     /* Button grid */
     .button-container {
       display: grid;
@@ -87,17 +105,13 @@
       margin-top: 15px;
     }
 
-    /* Button style */
-    .btn {
-      padding: 12px;
-      font-size: 14px;
-      font-weight: bold;
-      text-transform: uppercase;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      transition: 0.3s;
+    /* 3D Button random color change */
+    @keyframes buttonColorChange {
+      0% { background-color: #FF4500; }
+      25% { background-color: #4caf50; }
+      50% { background-color: #1e90ff; }
+      75% { background-color: #ff9800; }
+      100% { background-color: #9c27b0; }
     }
 
   </style>
@@ -146,42 +160,41 @@
       "retina_detect": true
     });
 
-    // Function to change button colors randomly
+    // Function to change button colors smoothly with mix of last color
+    function getRandomColor() {
+      const colors = ["#FF4500", "#4caf50", "#1e90ff", "#ff9800", "#9c27b0", "#f44336", "#00bcd4", "#ffeb3b"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Function to apply unique colors to each button
     function changeButtonColors() {
-      const colors = ["#ff4c4c", "#4caf50", "#1e90ff", "#ff9800", "#9c27b0", "#f44336", "#00bcd4", "#ffeb3b"];
-      document.querySelectorAll('.btn').forEach(button => {
-        button.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      const buttons = document.querySelectorAll('.btn');
+      buttons.forEach(button => {
+        const newColor = getRandomColor();
+        button.style.transition = "background-color 3.6s ease";
+        button.style.backgroundColor = newColor;
       });
     }
 
-    // Change button colors every 2 seconds
-    setInterval(changeButtonColors, 2000);
+    // Change button colors every 3.6 seconds with different colors for each button
+    setInterval(changeButtonColors, 3600);
 
     // Background music logic
     const audio = document.getElementById('background-audio');
 
-    function playAudio() {
-      audio.play().catch(error => console.log("Autoplay blocked: User interaction needed"));
-    }
-
-    function pauseAudio() {
-      audio.pause();
-    }
-
-    // Handle page visibility
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        pauseAudio();
-      } else {
-        playAudio();
-      }
+    // Play audio automatically when the page loads
+    window.addEventListener("load", () => {
+      audio.play().catch(error => {
+        console.log("Autoplay blocked: User interaction needed");
+        // Try again after a short delay if autoplay is blocked
+        setTimeout(() => audio.play(), 1000);
+      });
     });
 
-    // Try playing audio when the page loads
-    window.addEventListener("load", playAudio);
-
     // Allow user interaction to trigger audio if autoplay is blocked
-    document.addEventListener("click", playAudio, { once: true });
+    document.addEventListener("click", () => {
+      audio.play().catch(error => console.log("Autoplay still blocked, waiting for user interaction"));
+    });
 
   </script>
 
