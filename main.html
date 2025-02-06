@@ -23,7 +23,17 @@
       position: relative;
     }
 
-    /* Normal frame */
+    /* Background Particles */
+    #particles-js {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* Frame */
     .frame {
       width: 90%;
       max-width: 400px;
@@ -33,11 +43,10 @@
       backdrop-filter: blur(8px);
       text-align: center;
       box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
-      overflow: hidden;
       position: relative;
     }
 
-    /* Typing effect scrolling right to left */
+    /* Typing effect */
     .typing-effect {
       font-size: 18px;
       font-weight: bold;
@@ -50,11 +59,10 @@
       display: inline-block;
     }
 
-    /* Moving animation */
+    /* Slow motion typing */
     .typing-effect span {
       display: inline-block;
-      white-space: nowrap;
-      animation: scrollText 6s linear infinite;
+      animation: scrollText 20s steps(50) infinite, randomColor 5s linear infinite;
     }
 
     @keyframes scrollText {
@@ -62,7 +70,16 @@
       to { transform: translateX(-100%); }
     }
 
-    /* 2x2 button grid */
+    /* Random color effect */
+    @keyframes randomColor {
+      0% { color: #FF4500; }
+      25% { color: #4caf50; }
+      50% { color: #1e90ff; }
+      75% { color: #ff9800; }
+      100% { color: #9c27b0; }
+    }
+
+    /* Button grid */
     .button-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -70,7 +87,7 @@
       margin-top: 15px;
     }
 
-    /* Normal button style */
+    /* Button style */
     .btn {
       padding: 12px;
       font-size: 14px;
@@ -83,30 +100,17 @@
       transition: 0.3s;
     }
 
-    /* Particle Background */
-    #particles-js {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
   </style>
 </head>
 <body>
 
   <div id="particles-js"></div>
 
-  <!-- Normal frame -->
   <div class="frame">
-    <!-- Scrolling Text -->
     <div class="typing-effect">
-      <span>WELCOME TO THE RHODVICKEZ-MD-MADE BY RHODVICKEZ AND HANSTZ FROM-TANZANIA</span>
+      <span>WELCOME TO THE RHODVICKEZ-MD - MADE BY RHODVICKEZ AND HANSTZ FROM TANZANIA</span>
     </div>
 
-    <!-- 2x2 Buttons Grid -->
     <div class="button-container">
       <button onclick="window.open(`/pair`)" class="btn">Pair Code</button>
       <button onclick="window.open(`https://github.com/Rhodvick/RHODVICKEZ-MD`)" class="btn">GitHub</button>
@@ -116,15 +120,15 @@
       <button onclick="window.open(`https://whatsapp.com/channel/0029VasiOoR3bbUw5aV4qB31`)" class="btn">Channel-2</button>
     </div>
 
-    <!-- Audio Player -->
+    <!-- Background Audio -->
     <audio id="background-audio" loop>
       <source src="https://files.catbox.moe/rswza4.mp3" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
   </div>
 
-  <!-- ParticlesJS Script -->
   <script>
+    // Initialize ParticlesJS
     particlesJS('particles-js', {
       "particles": {
         "number": { "value": 120, "density": { "enable": true, "value_area": 800 } },
@@ -153,21 +157,31 @@
     // Change button colors every 2 seconds
     setInterval(changeButtonColors, 2000);
 
-    // Audio play/pause on visibility change
+    // Background music logic
     const audio = document.getElementById('background-audio');
 
-    document.addEventListener("visibilitychange", function() {
+    function playAudio() {
+      audio.play().catch(error => console.log("Autoplay blocked: User interaction needed"));
+    }
+
+    function pauseAudio() {
+      audio.pause();
+    }
+
+    // Handle page visibility
+    document.addEventListener("visibilitychange", () => {
       if (document.hidden) {
-        audio.pause(); // Pause audio when user leaves the tab
+        pauseAudio();
       } else {
-        audio.play().catch(error => console.log("Audio play failed:", error)); // Resume audio when user returns
+        playAudio();
       }
     });
 
-    // Auto-play audio when page loads
-    window.addEventListener("load", () => {
-      audio.play().catch(error => console.log("User interaction required for autoplay:", error));
-    });
+    // Try playing audio when the page loads
+    window.addEventListener("load", playAudio);
+
+    // Allow user interaction to trigger audio if autoplay is blocked
+    document.addEventListener("click", playAudio, { once: true });
 
   </script>
 
