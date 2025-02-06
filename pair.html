@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RHODVICKEZ-MD</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet"> <!-- Fancy Font -->
   <style>
     body {
       margin: 0;
@@ -20,27 +21,30 @@
       background: black;
     }
 
-    /* Background animation: Snow + Fire */
-    .background {
+    /* Background Video with low brightness */
+    .background-video {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
+      object-fit: cover;
+      filter: brightness(40%); /* Lowered brightness */
       z-index: -1;
     }
 
-    /* Minimized frame only around input */
+    /* Minimized frame only around input and typing effect */
     .frame {
-      background: rgba(0, 0, 0, 0.7);
-      padding: 15px;
-      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.8); /* Slightly darker for better visibility */
+      padding: 25px;
+      border-radius: 15px;
       box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 00px;
+      max-width: 260px;
+      width: 100%;
     }
 
     .input-container {
@@ -50,9 +54,9 @@
     }
 
     .input-container input {
-      width: 160px;
+      width: 180px;
       padding: 10px;
-      font-size: 1rem;
+      font-size: 1.1rem;
       border: none;
       border-radius: 8px;
       outline: none;
@@ -92,6 +96,7 @@
 
     /* Typing effect */
     .typing {
+      font-family: 'Playfair Display', serif; /* Fancy Font */
       color: #e9e4e4;
       font-size: 1.1rem;
       white-space: nowrap;
@@ -119,21 +124,6 @@
       100% { color: purple; }
     }
 
-    /* Snow effect */
-    @keyframes snowfall {
-      from { transform: translateY(-100vh); }
-      to { transform: translateY(100vh); }
-    }
-
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: white;
-      font-size: 10px;
-      opacity: 0.8;
-      animation: snowfall linear infinite;
-    }
-
     /* Fire effect */
     .fire {
       position: absolute;
@@ -156,22 +146,25 @@
 </head>
 <body>
 
-  <!-- Background Effects -->
-  <div class="background"></div>
+  <!-- Background Video -->
+  <video class="background-video" autoplay loop muted>
+    <source src="https://files.catbox.moe/k7rm3f.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-  <!-- Typing Effect -->
-  <p class="typing">RHODVICKEZ-MD PAIR SITE GET YOUR SESSION ID AND DEPLOY YOUR BOY</p>
-
-  <!-- Minimized Frame -->
+  <!-- Minimized Frame with Typing Effect and Input -->
   <div class="frame">
+    <!-- Typing Effect -->
+    <p class="typing">RHODVICKEZ-MD PAIR SITE GET YOUR SESSION ID AND DEPLOY YOUR BOY</p>
+
+    <!-- Input Form -->
     <div class="input-container">
       <input placeholder="254760XXXX" type="number" id="number">
       <button id="submit">Submit</button>
     </div>
+    
+    <!-- Waiting Message -->
     <a id="waiting-message">Please wait a while...</a>
-  </div>
-  
-  <main id="pair"></main>
   </div>
 
   <!-- Fire effect -->
@@ -221,25 +214,6 @@
         audio.play();
       }
     });
-
-    // Create snowfall effect
-    function createSnowflakes() {
-      const snowflakeCount = 50;
-      for (let i = 0; i < snowflakeCount; i++) {
-        let snowflake = document.createElement("div");
-        snowflake.innerHTML = "🎃";
-        snowflake.innerHTML = "🔥";
-        snowflake.innerHTML = "💡";
-        snowflake.innerHTML = "😂";
-        snowflake.classList.add("snowflake");
-        snowflake.style.left = `${Math.random() * 100}vw`;
-        snowflake.style.animationDuration = `${Math.random() * 5 + 3}s`;
-        snowflake.style.fontSize = `${Math.random() * 10 + 10}px`;
-        document.querySelector(".background").appendChild(snowflake);
-      }
-    }
-
-    createSnowflakes();
   </script>
 
 </body>
