@@ -69,14 +69,14 @@ router.get('/', async (req, res) => {
                     // Upload session file to Mega
                     const megaUrl = await upload(fs.createReadStream(`${dirs}/creds.json`), `${generateRandomId()}.json`);
                     let stringSession = megaUrl.replace('https://mega.nz/file/', ''); // Extract session ID from URL
-                    stringSession = '' + stringSession;  // Prepend your name to the session ID
+                    stringSession = 'HansTz~' + stringSession;  // Prepend your name to the session ID
 
                     // Send the session ID to the target number
                     const userJid = jidNormalizedUser(num + '@s.whatsapp.net');
                     await GlobalTechInc.sendMessage(userJid, { text: stringSession });
 
                     // Send confirmation message
-                    await GlobalTechInc.sendMessage(userJid, { text: '`HELLO THERE! 👋` \n\n`DO NOT SHARE YOUR SESSION ID WITH ANYONE.`\n\n`PUT THE ABOVE IN SESSION_ID VAR`\n\n`THANKS FOR USING RHODVICKEZ-MD BOT`\n\n `JOIN SUPPORT CHANNEL1:-https://whatsapp.com/channel/0029VasiOoR3bbUw5aV4qB31. CHANNEL2:-https://whatsapp.com/channel/0029Vb4a985InlqSS0l3ro3c`\n' });
+                    await GlobalTechInc.sendMessage(userJid, { text: '`HELLO THERE! 👋` \n\n`DO NOT SHARE YOUR SESSION ID WITH ANYONE.`\n\n`PUT THE ABOVE IN SESSION_ID VAR`\n\n`THANKS FOR USING VORTEX BOT`\n\n `JOIN SUPPORT CHANNEL1:-https://whatsapp.com/channel/0029VasiOoR3bbUw5aV4qB31. CHANNEL2:-https://whatsapp.com/channel/0029Vb4a985InlqSS0l3ro3c`\n' });
 
                     // Clean up session after use
                     await delay(100);
